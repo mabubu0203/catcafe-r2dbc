@@ -1,0 +1,38 @@
+dependencies {
+
+    // SpringBoot projects
+    api("org.springframework.boot:spring-boot-starter")
+    api("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    api("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+    api("org.springframework.boot:spring-boot-starter-hateoas")
+    api("org.springframework.boot:spring-boot-starter-security")
+    api("org.springframework.boot:spring-boot-starter-validation")
+    runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
+
+    compileOnly("io.projectreactor:reactor-core")
+
+    compileOnly("org.hibernate:hibernate-jpamodelgen")
+    annotationProcessor("org.hibernate:hibernate-jpamodelgen")
+
+    // lombok
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    }
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    archiveBaseName = "micro-common"
+    archiveVersion = "$catCafeVersion"
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}

@@ -30,6 +30,10 @@ public class StoreRepositoryImpl implements StoreRepository {
             var storeIds = searchConditions.optStoreIds().orElseGet(Collections::emptyList);
             return storeIds.size() == 0 || storeIds.contains(store.getId());
         };
+        // StoreSourceで全件検索します
+        // 論理削除フラグで絞り込みます
+        // 検索条件<storeIdInclude>で絞り込みます
+        // DTO -> Entityに変換します
         return Flux.empty();
     }
 
@@ -40,16 +44,29 @@ public class StoreRepositoryImpl implements StoreRepository {
 
     @Override
     public Mono<StoreId> resister(StoreEntity entity, LocalDateTime receptionTime) {
+        // Entity -> DTOに変換します
+        // StoreSourceで登録します
+        // 登録結果からStoreIdを生成します
         return Mono.empty();
     }
 
     @Override
     public Mono<StoreId> modify(StoreEntity entity, LocalDateTime receptionTime) {
+        // Entity から StoreId を取得します
+        // StoreIdで1件検索してDTOを取得します
+        // 取得したDTOにEntityの内容をマージします
+        // StoreSourceで更新します
+        // 更新結果からStoreIdを生成します
         return Mono.empty();
     }
 
     @Override
     public Mono<StoreId> logicalDelete(StoreEntity entity, LocalDateTime receptionTime) {
+        // Entity から StoreId を取得します
+        // StoreIdで1件検索してDTOを取得します
+        // 取得したDTOにEntityの内容をマージします
+        // StoreSourceで論理削除します
+        // 更新結果からStoreIdを生成します
         return Mono.empty();
     }
 

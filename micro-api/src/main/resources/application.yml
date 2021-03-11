@@ -1,0 +1,110 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring:
+  application:
+    admin:
+      enabled: true
+    name: micro-api
+  config:
+    activate:
+      on-profile: common
+  jmx:
+    enabled: true
+  main:
+    web-application-type: reactive
+  web:
+    resources:
+      chain:
+        strategy:
+          content:
+            paths: /webjars/swagger-ui/**.*
+  webflux:
+    hiddenmethod:
+      filter:
+        enabled: true
+server:
+  port: 9001
+  servlet:
+    context-path: /CatCafeApi
+  http2:
+    enabled: true
+logging:
+  level:
+    root: INFO
+    redis:
+      clients: TRACE
+    org:
+      springframework:
+        data:
+          r2dbc: DEBUG
+  file:
+    name: micro-api.log
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    readinessstate:
+      enabled: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: springdoc
+springdoc:
+  api-docs:
+    resolve-schema-properties: true
+  model-and-view-allowed: true
+  show-actuator: true
+  swagger-ui:
+    display-query-params: true
+    displayOperationId: true
+    displayRequestDuration: true
+    filter: true
+    path: /swagger-ui.html
+    showCommonExtensions: true
+    showExtensions: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  devtools:
+    livereload:
+      port: 35219
+    restart:
+      poll-interval: 1000
+  profiles:
+    include:
+      - common
+      - springdoc
+  r2dbc:
+    url: r2dbcs:mysql://localhost:3306/catcafe?useSSL=false&autoReconnect=true&reWriteBatchedInserts=true
+    username: root
+    password: root
+  redis:
+    database: 0
+    host: localhost
+    port: 6379
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  devtools:
+    add-properties: false
+  profiles:
+    include:
+      - common
+      - springdoc
+  redis:
+    database: 0
+    host: redis
+    port: 6379

@@ -1,0 +1,79 @@
+apply from: "$rootDir/gradle/generate_api.gradle"
+apply plugin: "com.google.cloud.tools.jib"
+
+dependencies {
+
+    // SpringBoot Projects
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("org.springframework.boot:spring-boot-properties-migrator")
+
+    // openapi generator
+    compileOnly("io.swagger:swagger-annotations:${swaggerAnnotationsVersion}")
+    compileOnly("io.springfox:springfox-core:3.0.0")
+    compileOnly("org.openapitools:jackson-databind-nullable:0.2.1")
+
+    // springdoc-openapi-ui
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:${springDocVersion}")
+    implementation("org.springdoc:springdoc-openapi-security:${springDocVersion}")
+
+    // lombok
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude group: "org.junit.vintage", module: "junit-vintage-engine"
+    }
+
+    // mysql
+    runtimeOnly("dev.miku:r2dbc-mysql")
+    runtimeOnly("mysql:mysql-connector-java")
+
+    developmentOnly("io.projectreactor:reactor-tools")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+springBoot {
+    buildInfo()
+}
+
+jar {
+    archiveBaseName = "micro-api"
+    enabled = true
+    manifest {
+        attributes 'Main-Class': 'mabubu0203.com.github.catcafe.api.ApiApp'
+    }
+}
+
+bootJar {
+    enabled = true
+    archiveBaseName = "micro-api"
+    archiveVersion = "$catCafeVersion"
+    launchScript()
+}
+
+jib {
+    container {
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+        environment = [JAVA_TOOL_OPTIONS: '-Dfile.encoding=UTF-8 -Dspring.profiles.active=docker']
+        jvmFlags = ['-Xms512m', '-Xdebug']
+        mainClass = 'mabubu0203.com.github.catcafe.api.ApiApp'
+        ports = ['9001']
+    }
+    from {
+        image = "adoptopenjdk/openjdk11:jdk-11.0.10_9-alpine-slim"
+    }
+    to {
+        image = "play-with-jib/micro-api:$catCafeVersion"
+    }
+}
+
+tasks.openApiGenerate.dependsOn ':openapi-generate:openApiGenerate'
+compileJava.dependsOn tasks.openApiGenerate
+sourceSets.main.java.srcDir "${openApiGenerate.outputDir.get()}/src/main/java"
+sourceSets.main.resources.srcDir "${openApiGenerate.outputDir.get()}/src/main/resources"

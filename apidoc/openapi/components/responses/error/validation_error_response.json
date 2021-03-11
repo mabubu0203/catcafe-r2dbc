@@ -3,7 +3,7 @@
     "validation_error_response": {
       "description": "バリデーションエラー",
       "content": {
-        "application/json": {
+        "application/x-ndjson": {
           "schema": {
             "description": "ValidationErrorレスポンス",
             "type": "object",

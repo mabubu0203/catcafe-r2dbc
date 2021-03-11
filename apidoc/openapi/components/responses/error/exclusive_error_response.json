@@ -3,7 +3,7 @@
     "exclusive_error_response": {
       "description": "楽観排他エラー",
       "content": {
-        "application/json": {
+        "application/x-ndjson": {
           "schema": {
             "description": "楽観排他Errorレスポンス",
             "type": "object",

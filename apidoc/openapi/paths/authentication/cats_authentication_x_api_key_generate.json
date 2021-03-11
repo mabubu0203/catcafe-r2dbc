@@ -1,0 +1,55 @@
+{
+  "summary": "",
+  "description": "",
+  "parameters": [
+    {
+      "name": "cats",
+      "in": "path",
+      "description": "カフェ識別子",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "enum": [
+          "cats"
+        ],
+        "x-enum-varnames": [
+          "cats"
+        ]
+      }
+    }
+  ],
+  "post": {
+    "tags": [
+      "authentication"
+    ],
+    "summary": "X-API-KEY生成API",
+    "description": "X-API-KEYを生成する",
+    "operationId": "xApiKeyGenerate",
+    "requestBody": {
+      "description": "リクエストボディ",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "../../components/requestBodies/authentication/request.json#/definitions/x_api_key_generate"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "正常系",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../components/responses/authentication/response.json#/definitions/x_api_key_generate_response"
+            }
+          }
+        }
+      },
+      "400": {
+        "$ref": "../components/responses/error/validation_error_response.json#/responses/validation_error_response"
+      }
+    }
+  }
+}

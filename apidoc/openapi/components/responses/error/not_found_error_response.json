@@ -3,7 +3,7 @@
     "not_found_error_response": {
       "description": "リソースエラー",
       "content": {
-        "application/json": {
+        "application/x-ndjson": {
           "schema": {
             "description": "リソースErrorレスポンス",
             "type": "object",

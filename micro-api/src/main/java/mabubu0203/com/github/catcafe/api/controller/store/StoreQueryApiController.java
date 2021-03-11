@@ -53,7 +53,7 @@ public class StoreQueryApiController implements StoreQueryApi {
       @Parameter(description = "カフェ識別子", schema = @Schema(allowableValues = {"cats"})) String cats,
       @Parameter(description = "店舗ID", schema = @Schema(type = "integer")) Integer storeId,
       ServerWebExchange exchange) {
-    return null;
+    return Mono.empty();
   }
 
   @Operation(

@@ -1,0 +1,40 @@
+{
+  "definitions": {
+    "store_create": {
+      "description": "postObject",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "description": "店舗名",
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128
+        }
+      }
+    },
+    "store_update": {
+      "description": "patchObject",
+      "type": "object",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "description": "店舗名",
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 128
+        },
+        "version": {
+          "description": "バージョンフィールド",
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    }
+  }
+}

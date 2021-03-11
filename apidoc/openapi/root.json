@@ -1,0 +1,66 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "CatCafeApi",
+    "description": "猫カフェのポータルサイトと管理画面で使用するAPIを定義",
+    "version": "0.1.0"
+  },
+  "tags": [
+    {
+      "name": "authentication",
+      "description": "認証"
+    },
+    {
+      "name": "store_command",
+      "description": "店舗(書き込み)"
+    },
+    {
+      "name": "store_query",
+      "description": "店舗(読み取り)"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://{username}:{port}/{basePath}",
+      "description": "ローカル環境",
+      "variables": {
+        "username": {
+          "default": "localhost"
+        },
+        "port": {
+          "enum": [
+            "9001"
+          ],
+          "default": "9001"
+        },
+        "basePath": {
+          "enum": [
+            "CatCafeApi"
+          ],
+          "default": "CatCafeApi"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/{cats}/authentication/x_api_key/generate": {
+      "$ref": "./paths/authentication/cats_authentication_x_api_key_generate.json"
+    },
+    "/{cats}/store": {
+      "$ref": "./paths/store/cats_store.json"
+    },
+    "/{cats}/stores": {
+      "$ref": "./paths/store/cats_stores.json"
+    },
+    "/{cats}/stores/{store_id}": {
+      "$ref": "./paths/store/cats_stores_store_id.json"
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "$ref": "./components/securitySchemes/api_key_auth.json#/definitions/ApiKeyAuth"
+      }
+    }
+  }
+}

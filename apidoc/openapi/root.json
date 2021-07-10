@@ -3,7 +3,7 @@
   "info": {
     "title": "CatCafeApi",
     "description": "猫カフェのポータルサイトと管理画面で使用するAPIを定義",
-    "version": "0.1.0"
+    "version": "1.2.0-SNAPSHOT"
   },
   "tags": [
     {

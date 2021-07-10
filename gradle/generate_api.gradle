@@ -16,3 +16,5 @@ openApiGenerate {
     logToStderr = true
 }
 
+tasks.openApiValidate.dependsOn ":openapi-generate:openApiGenerate"
+tasks.openApiGenerate.dependsOn tasks.openApiValidate

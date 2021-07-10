@@ -15,3 +15,4 @@ openApiGenerate {
     logToStderr = true
 }
 
+tasks.openApiGenerate.dependsOn tasks.openApiValidate
